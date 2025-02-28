@@ -50,7 +50,7 @@ async function initializeAR(effectPath) {
 
   try {
     deepAR = await deepar.initialize({
-      licenseKey: "3e854fd36262b0ac35a422a922d8bc2a13f8bcef5bc0bc2fb27dd830a9aae259a297d08f8a89d53b",
+      licenseKey: "8eea1cc4dc2348dc12395479a73a19db09c000c67b4796e8b384dbb072056b307fce25872a7dc317",
       previewElement,
       effect: effectPath,
       rootPath: "./deepar-resources",
