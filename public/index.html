@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SwooshFit - Virtual Shoe Try-On</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    
+    <!-- Welcome Screen with Catalog -->
+    <div class="fixed-fullscreen" id="welcome-screen">
+      <header class="site-header">
+        <div class="header-content">
+          <div class="logo-container">
+            <h1 class="logo">SwooshFit<span class="logo-dot"></span></h1>
+            <p class="tagline">Virtual Shoe Try-On Experience</p>
+          </div>
+          <div class="header-actions">
+            <button class="icon-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+            </button>
+            <button class="icon-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="hero-section">
+        <h2 class="hero-title">Find Your Perfect Fit</h2>
+        <p class="hero-subtitle">Try on shoes virtually before you buy</p>
+      </div>
+
+      <div class="catalog-container">
+        <div class="section-header">
+          <h3>Featured Collection</h3>
+          <a href="#" class="view-all">View All</a>
+        </div>
+        
+        <div class="shoe-grid">
+          <!-- Shoe Card 1 -->
+          <div class="shoe-card">
+            <div class="shoe-image-container gradient-1">
+              <img src="images/nike-air-max.png" alt="Nike Air Max" class="shoe-image" />
+              <button class="favorite-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </button>
+            </div>
+            <div class="shoe-details">
+              <h3 class="shoe-name">Nike Air Max</h3>
+              <p class="shoe-price">₹5199.99</p>
+              <div class="color-options">
+                <span class="color-option color-1 active"></span>
+                <span class="color-option color-2"></span>
+                <span class="color-option color-3"></span>
+              </div>
+              <p class="shoe-description">Classic comfort meets modern design with enhanced cushioning.</p>
+              <button class="try-ar-button" data-effect="effects/nike-air-max.deepar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                <span>Try AR Now</span>
+              </button>
+              <button class="try-3d-button" data-model="https://dazzal-david.github.io/3d-model/air-jordan-one.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                  <path d="M12 12l8-4.5"/>
+                  <path d="M12 12v9"/>
+                  <path d="M12 12L4 7.5"/>
+                </svg>
+                <span>Try 3D Now</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Shoe Card 2 -->
+          <div class="shoe-card">
+            <div class="shoe-image-container gradient-2">
+              <img src="images/nike-dunk.png" alt="Nike Zoom" class="shoe-image" />
+              <button class="favorite-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </button>
+            </div>
+            <div class="shoe-details">
+              <h3 class="shoe-name">Nike Dunk</h3>
+              <p class="shoe-price">₹3179.99</p>
+              <div class="color-options">
+                <span class="color-option color-4 active"></span>
+                <span class="color-option color-5"></span>
+                <span class="color-option color-3"></span>
+              </div>
+              <p class="shoe-description">Responsive cushioning for high-performance running.</p>
+              <button class="try-ar-button" data-effect="effects/nike-dunk.deepar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                <span>Try AR Now</span>
+              </button>
+              <button class="try-3d-button" data-model="https://dazzal-david.github.io/3d-model/nike-dunk.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                  <path d="M12 12l8-4.5"/>
+                  <path d="M12 12v9"/>
+                  <path d="M12 12L4 7.5"/>
+                </svg>
+                <span>Try 3D Now</span>
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Shoe Card 3 -->
+
+          <div class="shoe-card">
+            <div class="shoe-image-container gradient-3">
+              <img src="images/new-balance-574.png" alt="Nike Zoom" class="shoe-image" />
+              <button class="favorite-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </button>
+            </div>
+            <div class="shoe-details">
+              <h3 class="shoe-name">New Balance 574</h3>
+              <p class="shoe-price">₹7179.99</p>
+              <div class="color-options">
+                <span class="color-option color-4 active"></span>
+                <span class="color-option color-5"></span>
+                <span class="color-option color-3"></span>
+              </div>
+              <p class="shoe-description">Responsive cushioning for high-performance running.</p>
+              <button class="try-ar-button" data-effect="effects/new-balance-574.deepar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                <span>Try AR Now</span>
+              </button>
+              <button class="try-3d-button" data-model="https://dazzal-david.github.io/3d-model/new-balance.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                  <path d="M12 12l8-4.5"/>
+                  <path d="M12 12v9"/>
+                  <path d="M12 12L4 7.5"/>
+                </svg>
+                <span>Try 3D Now</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Shoe Card 4 -->
+
+          <div class="shoe-card">
+            <div class="shoe-image-container gradient-2">
+              <img src="images/nike-airforce-one.png" alt="Nike Zoom" class="shoe-image" />
+              <button class="favorite-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </button>
+            </div>
+            <div class="shoe-details">
+              <h3 class="shoe-name">Nike AirForce One</h3>
+              <p class="shoe-price">₹20179.99</p>
+              <div class="color-options">
+                <span class="color-option color-4 active"></span>
+                <span class="color-option color-5"></span>
+                <span class="color-option color-3"></span>
+              </div>
+              <p class="shoe-description">Responsive cushioning for high-performance running.</p>
+              <button class="try-ar-button" data-effect="effects/nike-airforce-1-lv8.deepar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                <span>Try AR Now</span>
+              </button>
+              <button class="try-3d-button" data-model="https://dazzal-david.github.io/3d-model/nike-air-force-one.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                  <path d="M12 12l8-4.5"/>
+                  <path d="M12 12v9"/>
+                  <path d="M12 12L4 7.5"/>
+                </svg>
+                <span>Try 3D Now</span>
+              </button>
+            </div>
+          </div>
+
+        <!-- Shoe Card 5 -->
+
+          <div class="shoe-card">
+            <div class="shoe-image-container gradient-2">
+              <img src="images/puma-voltaire.png" alt="Nike Zoom" class="shoe-image" />
+              <button class="favorite-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </button>
+            </div>
+            <div class="shoe-details">
+              <h3 class="shoe-name">Puma Voltaire</h3>
+              <p class="shoe-price">₹4179.99</p>
+              <div class="color-options">
+                <span class="color-option color-4 active"></span>
+                <span class="color-option color-5"></span>
+                <span class="color-option color-3"></span>
+              </div>
+              <p class="shoe-description">Responsive cushioning for high-performance running.</p>
+              <button class="try-ar-button" data-effect="effects/puma-voltaire.deepar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                <span>Try AR Now</span>
+              </button>
+              <button class="try-3d-button" data-model="https://dazzal-david.github.io/3d-model/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                  <path d="M12 12l8-4.5"/>
+                  <path d="M12 12v9"/>
+                  <path d="M12 12L4 7.5"/>
+                </svg>
+                <span>Try 3D Now</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Shoe Card 6 -->
+          <div class="shoe-card">
+            <div class="shoe-image-container gradient-3">
+              <img src="images/on-run-cloudrock.png" alt="Nike Free" class="shoe-image" />
+              <button class="favorite-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </button>
+            </div>
+            <div class="shoe-details">
+              <h3 class="shoe-name">On Run CloudRock</h3>
+              <p class="shoe-price">₹3159.99</p>
+              <div class="color-options">
+                <span class="color-option color-6 active"></span>
+                <span class="color-option color-7"></span>
+                <span class="color-option color-3"></span>
+              </div>
+              <p class="shoe-description">Natural flexibility for an unrestricted training experience.</p>
+              <button class="try-ar-button" data-effect="effects/on-run-cloudrock.deepar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                <span>Try AR Now</span>
+              </button>
+              <button class="try-3d-button" data-model="https://dazzal-david.github.io/3d-model/on-run.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                  <path d="M12 12l8-4.5"/>
+                  <path d="M12 12v9"/>
+                  <path d="M12 12L4 7.5"/>
+                </svg>
+                <span>Try 3D Now</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Permission denied screen -->
+    <div class="fixed-fullscreen screen" id="permission-denied-screen" style="display: none">
+      <div class="permission-denied-content">
+        <h3>Camera Access Required</h3>
+        <p>Please reload and allow camera access to use the virtual try-on feature.</p>
+        <button class="reload-button">Reload App</button>
+      </div>
+    </div>
+
+    <!-- AR screen -->
+    <div class="fixed-fullscreen screen" id="ar-screen" style="display: none">
+      <!-- Exit Button -->
+      <button id="exit-ar-button" class="exit-ar-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+
+      
+      <div class="ar-controls">
+        <div class="shoe-info">
+          <h3 id="ar-shoe-name">Nike Air Max</h3>
+          <p id="ar-shoe-price">$199.99</p>
+        </div>
+        <button class="buy-now-button">Buy Now</button>
+      </div>
+    </div>
+
+    <!-- 3D screen -->
+
+    <div class="fixed-fullscreen screen" id="viewer-screen" style="display: none">
+      <button id="exit-3d-button" class="exit-ar-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+      <div class="iframe-container">
+        <iframe id="viewer-iframe" frameborder="0"></iframe>
+      </div>
+    </div>
+
+    <script>
+
+      // Add this to your existing JavaScript file
+      document.addEventListener('DOMContentLoaded', function() {
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const viewer3dScreen = document.getElementById('viewer-screen');
+        const exit3dButton = document.getElementById('exit-3d-button');
+        const viewer3dIframe = document.getElementById('viewer-iframe');
+        
+        // Function to open 3D viewer
+        function open3DViewer(modelUrl) {
+          welcomeScreen.style.display = 'none';
+          viewer3dScreen.style.display = 'block';
+          viewer3dIframe.src = modelUrl;
+        }
+        
+        // Function to close 3D viewer
+        function close3DViewer() {
+          welcomeScreen.style.display = 'block';
+          viewer3dScreen.style.display = 'none';
+          viewer3dIframe.src = '';
+        }
+        
+        // Add click handlers for 3D viewer buttons
+        document.querySelectorAll('.try-3d-button').forEach(button => {
+          button.addEventListener('click', function() {
+            const modelUrl = this.dataset.model;
+            open3DViewer(modelUrl);
+          });
+        });
+        
+        // Exit 3D viewer handler
+        exit3dButton.addEventListener('click', close3DViewer);
+      });
+    </script>
+
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>
+
