@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwooshFit Community - Manage Posts</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="collections.css">
+    <link rel="stylesheet" href="manage-posts.css">
+</head>
+<body>
+
+    <!-- Mobile Menu Toggle -->
+    <button id="mobileMenuToggle" class="mobile-menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+    </button>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+
+    <div class="app-container">
+        <!-- Navigation Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" class="logo-icon" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    <div>
+                        <h1 class="logo-text">SwooshFit</h1>
+                        <p class="logo-subtext">Community</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="collections.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="manage-posts.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Manage Uploads</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Profile</span>
+                </a>
+                <button id="logoutBtn" class="nav-item logout">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div>
+                    <h2>Manage Your Posts</h2>
+                    <p class="text-secondary">Edit or delete your posts</p>
+                </div>
+                <a href="create-post.html" class="create-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Create New Post
+                </a>
+            </header>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Loading your posts...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state hidden">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="empty-icon">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+                <h3>No posts yet</h3>
+                <p>You haven't created any posts yet. Share your Collections with the community!</p>
+                <a href="create-post.html" class="create-post-btn">Create Your First Post</a>
+            </div>
+
+            <!-- Posts Container -->
+            <div id="userPosts" class="user-posts-container hidden"></div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Delete Post</h3>
+                <button class="close-modal" id="closeModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="warning-icon">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <p>Are you sure you want to delete this post? This action cannot be undone.</p>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelDelete" class="btn btn-secondary">Cancel</button>
+                <button id="confirmDelete" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+        
+        const supabaseUrl = 'https://aiioworijemrpazzpzed.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpaW93b3JpamVtcnBhenpwemVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNTcxMTMsImV4cCI6MjA1NjkzMzExM30.ScjhmoObzzgwZ-lhegHFpt8cpaz6qkik6vlD7xxhUQc';
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        // DOM Elements
+        const loadingState = document.getElementById('loadingState');
+        const emptyState = document.getElementById('emptyState');
+        const userPosts = document.getElementById('userPosts');
+        const deleteModal = document.getElementById('deleteModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelDelete = document.getElementById('cancelDelete');
+        const confirmDelete = document.getElementById('confirmDelete');
+
+        let currentUser = null;
+        let postToDelete = null;
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Check authentication
+        async function checkAuth() {
+            const { data: { user }, error } = await supabase.auth.getUser()
+            if (!user) {
+                window.location.href = '../login.html'
+                return null
+            }
+            currentUser = user;
+            return user
+        }
+
+        // Load user's posts
+        async function loadUserPosts() {
+            loadingState.classList.remove('hidden');
+            userPosts.classList.add('hidden');
+            emptyState.classList.add('hidden');
+            userPosts.innerHTML = '';
+
+            try {
+                const { data: posts, error } = await supabase
+                    .from('posts')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                loadingState.classList.add('hidden');
+
+                if (!posts || posts.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+
+                userPosts.classList.remove('hidden');
+                
+                posts.forEach(post => {
+                    const postElement = document.createElement('div');
+                    postElement.id = `post-${post.id}`;
+                    postElement.className = 'post-item';
+                    
+                    // Get the first image as the preview image
+                    const previewImage = post.images && post.images.length > 0 ? post.images[0] : null;
+                    
+                    postElement.innerHTML = `
+                        <div class="post-header">
+                            <div class="post-info">
+                                <h3 class="post-title">${post.title}</h3>
+                                <p class="post-date">Posted on ${formatDate(post.created_at)}</p>
+                            </div>
+                            <button class="delete-btn" data-post-id="${post.id}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                                <span>Delete</span>
+                            </button>
+                        </div>
+                        <p class="post-description">${post.description}</p>
+                        <div class="post-images">
+                            ${post.images.map((img, index) => `
+                                <div class="image-item">
+                                    <img src="${img}" alt="Post image ${index + 1}">
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="post-actions">
+                            <a href="collections.html" class="view-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <span>View in Feed</span>
+                            </a>
+                        </div>
+                    `;
+                    
+                    userPosts.appendChild(postElement);
+                });
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                loadingState.classList.add('hidden');
+                alert('Error loading posts. Please try again.');
+            }
+        }
+
+        // Delete post handler
+        async function deletePost(postId) {
+            try {
+                const postElement = document.getElementById(`post-${postId}`);
+                
+                // Delete from Supabase
+                const { error } = await supabase
+                    .from('posts')
+                    .delete()
+                    .eq('id', postId);
+
+                if (error) throw error;
+
+                // Animate and remove post element
+                postElement.classList.add('delete-animation');
+                setTimeout(() => {
+                    postElement.remove();
+                    if (userPosts.children.length === 0) {
+                        userPosts.classList.add('hidden');
+                        emptyState.classList.remove('hidden');
+                    }
+                }, 500);
+
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                alert('Error deleting post. Please try again.');
+            }
+        }
+
+        // Modal handlers
+        document.addEventListener('click', e => {
+            const deleteBtn = e.target.closest('.delete-btn');
+            if (deleteBtn) {
+                postToDelete = deleteBtn.dataset.postId;
+                deleteModal.classList.remove('hidden');
+            }
+        });
+
+        closeModal.addEventListener('click', () => {
+            deleteModal.classList.add('hidden');
+            postToDelete = null;
+        });
+
+        cancelDelete.addEventListener('click', () => {
+            deleteModal.classList.add('hidden');
+            postToDelete = null;
+        });
+
+        confirmDelete.addEventListener('click', async () => {
+            if (postToDelete) {
+                deleteModal.classList.add('hidden');
+                await deletePost(postToDelete);
+                postToDelete = null;
+            }
+        });
+
+        // Close modal when clicking outside
+        deleteModal.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                deleteModal.classList.add('hidden');
+                postToDelete = null;
+            }
+        });
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            const { error } = await supabase.auth.signOut();
+            if (!error) {
+                window.location.href = '../main.html';
+            }
+        });
+
+        // Initialize
+        const user = await checkAuth();
+        if (user) {
+            loadUserPosts();
+        }
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('mobileMenuOverlay');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', toggleMobileMenu);
+
+        // Close menu when clicking a link on mobile
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+        // Close menu when screen is resized to desktop size
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+
+    </script>
+</body>
+</html>

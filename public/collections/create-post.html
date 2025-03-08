@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwooshFit Community - Create Post</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="collections.css">
+    <link rel="stylesheet" href="create-post.css">
+</head>
+<body>
+
+    <!-- Mobile Menu Toggle -->
+    <button id="mobileMenuToggle" class="mobile-menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+    </button>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+
+    <div class="app-container">
+        <!-- Navigation Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" class="logo-icon" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    <div>
+                        <h1 class="logo-text">SwooshFit</h1>
+                        <p class="logo-subtext">Community</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="collections.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="manage-posts.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Manage Uploads</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Profile</span>
+                </a>
+                <button id="logoutBtn" class="nav-item logout">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h2>Create New Post</h2>
+                <p class="text-secondary">Share your collections with the community</p>
+            </header>
+
+            <div class="form-container">
+                <form id="newPostForm" class="create-post-form">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" placeholder="Give your post a title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" placeholder="Share details about your collection..." rows="5" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="images">Images (Select up to 6)</label>
+                        <div class="file-upload-container">
+                            <input type="file" id="images" multiple accept="image/*" required>
+                            <div class="file-upload-label">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="upload-icon">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                <span>Choose files or drag & drop</span>
+                            </div>
+                        </div>
+                        <p class="file-info">Supported formats: JPG, PNG, GIF (Max 5MB each)</p>
+                    </div>
+
+                    <div id="imagePreview" class="image-preview-grid"></div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" id="submitBtn" class="btn btn-primary">Create Post</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Creating your post...</p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+    
+        const supabaseUrl = 'https://aiioworijemrpazzpzed.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpaW93b3JpamVtcnBhenpwemVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNTcxMTMsImV4cCI6MjA1NjkzMzExM30.ScjhmoObzzgwZ-lhegHFpt8cpaz6qkik6vlD7xxhUQc';
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        // DOM Elements
+        const imageInput = document.getElementById('images');
+        const imagePreview = document.getElementById('imagePreview');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        // Check authentication
+        async function checkAuth() {
+            const { data: { user }, error } = await supabase.auth.getUser();
+            if (!user) {
+                window.location.href = '../login.html';
+            }
+            return user;
+        }
+
+        // Image preview functionality
+        imageInput.addEventListener('change', () => {
+            imagePreview.innerHTML = '';
+            const files = Array.from(imageInput.files);
+            
+            if (files.length > 6) {
+                alert('You can only upload up to 6 images');
+                imageInput.value = '';
+                return;
+            }
+            
+            files.forEach((file, index) => {
+                // Validate file size (5MB max)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`File "${file.name}" exceeds 5MB limit`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview ${index + 1}">
+                        <button type="button" class="remove-image" data-index="${index}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    `;
+                    imagePreview.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Remove image from preview
+        imagePreview.addEventListener('click', (e) => {
+            const removeBtn = e.target.closest('.remove-image');
+            if (!removeBtn) return;
+            
+            const index = parseInt(removeBtn.dataset.index);
+            const dt = new DataTransfer();
+            const files = Array.from(imageInput.files);
+            
+            files.forEach((file, i) => {
+                if (i !== index) dt.items.add(file);
+            });
+            
+            imageInput.files = dt.files;
+            
+            // Trigger change event to update preview
+            const event = new Event('change');
+            imageInput.dispatchEvent(event);
+        });
+
+        // Handle form submission
+        document.getElementById('newPostForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            loadingOverlay.classList.remove('hidden');
+
+            try {
+                // Get user
+                const { data: { user }, error: userError } = await supabase.auth.getUser();
+                if (userError) throw userError;
+                if (!user) {
+                    window.location.href = '../login.html';
+                    return;
+                }
+
+                // Get form data
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+                const files = Array.from(document.getElementById('images').files);
+
+                // Validate
+                if (!title || !description) {
+                    throw new Error('Please fill in all fields');
+                }
+                if (files.length === 0 || files.length > 6) {
+                    throw new Error('Please select between 1 and 6 images');
+                }
+
+                // Create post first
+                const { data: post, error: postError } = await supabase
+                    .from('posts')
+                    .insert({
+                        user_id: user.id,
+                        title: title,
+                        description: description,
+                        images: [] // Empty array initially
+                    })
+                    .select()
+                    .single();
+
+                if (postError) throw postError;
+
+                // Upload images and update post with URLs
+                const imageUrls = [];
+                for (const file of files) {
+                    // Create unique filename
+                    const timestamp = Date.now();
+                    const fileExt = file.name.split('.').pop().toLowerCase();
+                    const fileName = `${timestamp}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+                    
+                    // Upload file
+                    const { data: uploadData, error: uploadError } = await supabase
+                        .storage
+                        .from('posts') // Using 'posts' bucket instead of creating a new one
+                        .upload(`public/${user.id}/${fileName}`, file);
+
+                    if (uploadError) throw uploadError;
+
+                    // Get public URL
+                    const { data: urlData } = supabase
+                        .storage
+                        .from('posts')
+                        .getPublicUrl(`public/${user.id}/${fileName}`);
+
+                    imageUrls.push(urlData.publicUrl);
+                }
+
+                // Update post with image URLs
+                const { error: updateError } = await supabase
+                    .from('posts')
+                    .update({ images: imageUrls })
+                    .eq('id', post.id);
+
+                if (updateError) throw updateError;
+
+                // Redirect on success
+                window.location.href = 'collections.html';
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert(error.message || 'Error creating post');
+                loadingOverlay.classList.add('hidden');
+            }
+        });
+
+        // Cancel button
+        cancelBtn.addEventListener('click', () => {
+            window.location.href = 'collections.html';
+        });
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            const { error } = await supabase.auth.signOut();
+            if (!error) {
+                window.location.href = '../main.html';
+            }
+        });
+
+        // Initialize
+        await checkAuth();
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('mobileMenuOverlay');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', toggleMobileMenu);
+
+        // Close menu when clicking a link on mobile
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+        // Close menu when screen is resized to desktop size
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+
+    </script>
+</body>
+</html>

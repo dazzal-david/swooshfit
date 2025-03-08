@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwooshFit Community - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css"></link>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Section with Image and Text -->
+        <div class="image-section">
+            <div class="image-content">
+                <h1>Share Your Kicks With The World</h1>
+                <p>Join the SwooshFit Community and showcase your exclusive shoe collection with enthusiasts around the globe.</p>
+                <div class="shoe-icons">
+                    <div class="shoe-icon">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <div class="shoe-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="shoe-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-shapes">
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+        </div>
+
+        <!-- Right Section with Forms -->
+        <div class="form-section">
+            <div class="form-container">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h2>SwooshFit</h2>
+                        <p>Share Your Shoe Collection</p>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginFormContainer">
+                    <div class="form-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to continue to your collection</p>
+                    </div>
+
+                    <form id="loginForm" class="form">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-group">
+                                <input type="email" id="email" class="form-control" required>
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <input type="password" id="password" class="form-control" required>
+                                <i class="fas fa-lock input-icon"></i>
+                                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                            </div>
+                        </div>
+
+                        <div class="forgot-password">
+                            <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Sign In</button>
+                    </form>
+
+                    <div class="toggle-form">
+                        Don't have an account?<a href="#" id="showSignupLink">Sign Up</a>
+                    </div>
+                </div>
+
+                <!-- Signup Form (Hidden by default) -->
+                <div id="signupFormContainer" class="hidden">
+                    <div class="form-header">
+                        <h2>Create Account</h2>
+                        <p>Join the SwooshFit community today</p>
+                    </div>
+
+                    <form id="signupForm" class="form">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <div class="input-group">
+                                <input type="text" id="signupName" class="form-control" required>
+                                <i class="fas fa-user input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <div class="input-group">
+                                <input type="email" id="signupEmail" class="form-control" required>
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <div class="input-group">
+                                <input type="password" id="signupPassword" class="form-control" required>
+                                <i class="fas fa-lock input-icon"></i>
+                                <i class="fas fa-eye password-toggle" id="toggleSignupPassword"></i>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Create Account</button>
+                    </form>
+
+
+                    <div class="toggle-form">
+                        Already have an account?<a href="#" id="showLoginLink">Sign In</a>
+                    </div>
+                </div>
+
+                <!-- Forgot Password Form (Hidden by default) -->
+                <div id="forgotPasswordContainer" class="hidden">
+                    <div class="form-header">
+                        <h2>Reset Password</h2>
+                        <p>Enter your email to receive a reset link</p>
+                    </div>
+
+                    <form id="forgotPasswordForm" class="form">
+                        <div class="form-group">
+                            <label for="resetEmail">Email Address</label>
+                            <div class="input-group">
+                                <input type="email" id="resetEmail" class="form-control" required>
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Send Reset Link</button>
+                    </form>
+
+                    <div class="toggle-form">
+                        Remember your password?<a href="#" id="backToLoginLink">Back to Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="notification-icon fas fa-check-circle"></i>
+        <div class="notification-content">
+            <h3>Success!</h3>
+            <p>Your action was completed successfully.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module">
+
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+        // Initialize Supabase client
+        const supabaseUrl = 'https://aiioworijemrpazzpzed.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpaW93b3JpamVtcnBhenpwemVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNTcxMTMsImV4cCI6MjA1NjkzMzExM30.ScjhmoObzzgwZ-lhegHFpt8cpaz6qkik6vlD7xxhUQc';
+        const supabaseClient = createClient(supabaseUrl, supabaseKey);
+
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const loginFormContainer = document.getElementById('loginFormContainer');
+        const signupFormContainer = document.getElementById('signupFormContainer');
+        const forgotPasswordContainer = document.getElementById('forgotPasswordContainer');
+        const showSignupLink = document.getElementById('showSignupLink');
+        const showLoginLink = document.getElementById('showLoginLink');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const backToLoginLink = document.getElementById('backToLoginLink');
+        const togglePassword = document.getElementById('togglePassword');
+        const toggleSignupPassword = document.getElementById('toggleSignupPassword');
+        const notification = document.getElementById('notification');
+
+        // Toggle Password Visibility
+        togglePassword.addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            }
+        });
+
+        toggleSignupPassword.addEventListener('click', function() {
+            const passwordInput = document.getElementById('signupPassword');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            }
+        });
+
+        // Show Notification
+        function showNotification(type, title, message) {
+    const notification = document.getElementById('notification');
+    if (!notification) return;
+
+    notification.className = 'notification ' + type;
+    const icon = notification.querySelector('.notification-icon');
+    const titleEl = notification.querySelector('h3');
+    const messageEl = notification.querySelector('p');
+
+    // Set icon based on type
+    if (type === 'success') {
+        icon.className = 'notification-icon fas fa-check-circle';
+        icon.style.color = '#10B981'; // green
+    } else {
+        icon.className = 'notification-icon fas fa-exclamation-circle';
+        icon.style.color = '#EF4444'; // red
+    }
+
+    titleEl.textContent = title || 'Notification';
+    messageEl.textContent = message || 'Something happened';
+
+    notification.classList.add('show');
+
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 5000);
+}
+
+        // Toggle between forms
+        showSignupLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginFormContainer.classList.add('hidden');
+            signupFormContainer.classList.remove('hidden');
+            forgotPasswordContainer.classList.add('hidden');
+        });
+
+        showLoginLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginFormContainer.classList.remove('hidden');
+            signupFormContainer.classList.add('hidden');
+            forgotPasswordContainer.classList.add('hidden');
+        });
+
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginFormContainer.classList.add('hidden');
+            signupFormContainer.classList.add('hidden');
+            forgotPasswordContainer.classList.remove('hidden');
+        });
+
+        backToLoginLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginFormContainer.classList.remove('hidden');
+            signupFormContainer.classList.add('hidden');
+            forgotPasswordContainer.classList.add('hidden');
+        });
+
+        // Login handler
+        loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const submitButton = loginForm.querySelector('button');
+
+    try {
+        submitButton.disabled = true;
+        submitButton.classList.add('btn-loading');
+        submitButton.textContent = '';
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (error) throw error;
+        
+        showNotification('success', 'Welcome back!', 'You have successfully signed in.');
+        setTimeout(() => {
+            window.location.href = 'collections/collections.html';
+        }, 1500);
+    } catch (error) {
+        showNotification('error', 'Login failed', error.message);
+    } finally {
+        submitButton.disabled = false;
+        submitButton.classList.remove('btn-loading');
+        submitButton.textContent = 'Sign In';
+    }
+});
+
+        // Signup handler
+        signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const submitButton = signupForm.querySelector('button');
+
+    if (password.length < 6) {
+        showNotification('error', 'Validation Error', 'Password must be at least 6 characters long');
+        return;
+    }
+
+    try {
+        submitButton.disabled = true;
+        submitButton.classList.add('btn-loading');
+        submitButton.textContent = '';
+
+        const { data, error } = await supabaseClient.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    full_name: name
+                }
+            }
+        });
+
+        if (error) throw error;
+
+        // Also create a profile record
+        if (data?.user) {
+            await supabaseClient
+                .from('profiles')
+                .insert([
+                    {
+                        id: data.user.id,
+                        username: email.split('@')[0],
+                        display_name: name
+                    }
+                ]);
+        }
+        
+        showNotification('success', 'Account created!', 'Please check your email for verification.');
+        setTimeout(() => {
+            loginFormContainer.classList.remove('hidden');
+            signupFormContainer.classList.add('hidden');
+        }, 2000);
+    } catch (error) {
+        showNotification('error', 'Signup failed', error.message);
+    } finally {
+        submitButton.disabled = false;
+        submitButton.classList.remove('btn-loading');
+        submitButton.textContent = 'Create Account';
+    }
+});
+
+        // Forgot password handler
+        forgotPasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value.trim();
+            const submitButton = forgotPasswordForm.querySelector('button');
+
+            try {
+                submitButton.disabled = true;
+                submitButton.classList.add('btn-loading');
+                submitButton.textContent = '';
+
+                const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin + '/reset-password.html',
+                });
+
+                if (error) throw error;
+                
+                showNotification('success', 'Email sent', 'Please check your inbox for password reset instructions.');
+                setTimeout(() => {
+                    loginFormContainer.classList.remove('hidden');
+                    forgotPasswordContainer.classList.add('hidden');
+                }, 2000);
+            } catch (error) {
+                showNotification('error', 'Request failed', error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.classList.remove('btn-loading');
+                submitButton.textContent = 'Send Reset Link';
+            }
+        });
+
+        // Social login handlers
+        const googleButtons = document.querySelectorAll('.social-btn.google');
+        const facebookButtons = document.querySelectorAll('.social-btn.facebook');
+
+        googleButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                try {
+                    const { error } = await supabase.auth.signInWithOAuth({
+                        provider: 'google',
+                        options: {
+                            redirectTo: window.location.origin + '/collections/collections.html'
+                        }
+                    });
+                    if (error) throw error;
+                } catch (error) {
+                    showNotification('error', 'Google login failed', error.message);
+                }
+            });
+        });
+
+        facebookButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                try {
+                    const { error } = await supabase.auth.signInWithOAuth({
+                        provider: 'facebook',
+                        options: {
+                            redirectTo: window.location.origin + '/collections/collections.html'
+                        }
+                    });
+                    if (error) throw error;
+                } catch (error) {
+                    showNotification('error', 'Facebook login failed', error.message);
+                }
+            });
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                window.location.href = 'collections/collections.html';
+            }
+        });
+    </script>
+</body>
+</html>

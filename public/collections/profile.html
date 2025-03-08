@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwooshFit Community - Profile</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="collections.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button id="mobileMenuToggle" class="mobile-menu-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+    </button>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+
+    <div class="app-container">
+        <!-- Navigation Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" class="logo-icon" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    <div>
+                        <h1 class="logo-text">SwooshFit</h1>
+                        <p class="logo-subtext">Community</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="collections.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="manage-posts.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Manage Uploads</span>
+                </a>
+                <a href="profile.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Profile</span>
+                </a>
+                <button id="logoutBtn" class="nav-item logout">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div>
+                    <h2>Profile Settings</h2>
+                    <p class="text-secondary">Manage your profile and preferences</p>
+                </div>
+            </header>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Loading profile...</p>
+            </div>
+
+            <div id="profileContent" class="profile-content hidden">
+                <!-- Profile Header Card -->
+                <div class="profile-header-card">
+                    <div class="profile-header-content">
+                        <div class="avatar-container">
+                            <img id="avatarPreview" class="avatar-image" 
+                                 src="https://via.placeholder.com/96" alt="Profile picture">
+                            <label for="avatarInput" class="avatar-upload-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </label>
+                            <input type="file" id="avatarInput" class="hidden" accept="image/*">
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="displayNameText" class="profile-name"></h2>
+                            <p id="usernameText" class="profile-username"></p>
+                            <p id="emailText" class="profile-email"></p>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div id="postsCount" class="stat-value">0</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div id="followersCount" class="stat-value">0</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div id="followingCount" class="stat-value">0</div>
+                            <div class="stat-label">Following</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Form Card -->
+                <div class="profile-form-card">
+                    <h3 class="form-title">Edit Profile</h3>
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="displayName">Display Name</label>
+                            <input type="text" id="displayName" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea id="bio" rows="3" class="form-input"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="url" id="website" class="form-input">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+        
+        const supabaseUrl = 'https://aiioworijemrpazzpzed.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpaW93b3JpamVtcnBhenpwemVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNTcxMTMsImV4cCI6MjA1NjkzMzExM30.ScjhmoObzzgwZ-lhegHFpt8cpaz6qkik6vlD7xxhUQc';
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        let currentUser = null;
+
+        // Check authentication
+        async function checkAuth() {
+            const { data: { user }, error } = await supabase.auth.getUser()
+            if (!user) {
+                window.location.href = '../login.html'
+                return null
+            }
+            currentUser = user;
+            return user
+        }
+
+        // Load profile data
+        async function loadProfile() {
+            try {
+                // Show loading state, hide profile content
+                document.getElementById('loadingState').classList.remove('hidden');
+                document.getElementById('profileContent').classList.add('hidden');
+
+                // Get profile data
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+
+                if (error) throw error;
+
+                // Update form fields
+                document.getElementById('displayName').value = profile.display_name || '';
+                document.getElementById('username').value = profile.username || '';
+                document.getElementById('bio').value = profile.bio || '';
+                document.getElementById('website').value = profile.website || '';
+
+                // Update header display
+                document.getElementById('displayNameText').textContent = profile.display_name || 'No Display Name';
+                document.getElementById('usernameText').textContent = '@' + (profile.username || '');
+                document.getElementById('emailText').textContent = currentUser.email;
+                
+                // Update avatar
+                if (profile.avatar_url) {
+                    document.getElementById('avatarPreview').src = profile.avatar_url;
+                }
+
+                // Load stats
+                await loadStats();
+
+                // Hide loading state, show profile content
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('profileContent').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('Error loading profile');
+                // Hide loading state on error
+                document.getElementById('loadingState').classList.add('hidden');
+            }
+        }
+
+        // Load user stats
+        async function loadStats() {
+            try {
+                // Get posts count
+                const { count: postsCount } = await supabase
+                    .from('posts')
+                    .select('id', { count: 'exact' })
+                    .eq('user_id', currentUser.id);
+
+                // Get followers count
+                const { count: followersCount } = await supabase
+                    .from('followers')
+                    .select('follower_id', { count: 'exact' })
+                    .eq('following_id', currentUser.id);
+
+                // Get following count
+                const { count: followingCount } = await supabase
+                    .from('followers')
+                    .select('following_id', { count: 'exact' })
+                    .eq('follower_id', currentUser.id);
+
+                // Update stats display
+                document.getElementById('postsCount').textContent = postsCount || 0;
+                document.getElementById('followersCount').textContent = followersCount || 0;
+                document.getElementById('followingCount').textContent = followingCount || 0;
+
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Handle profile form submission
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const updates = {
+                id: currentUser.id,
+                display_name: document.getElementById('displayName').value,
+                username: document.getElementById('username').value,
+                bio: document.getElementById('bio').value,
+                website: document.getElementById('website').value,
+                updated_at: new Date()
+            }
+
+            try {
+                const { error } = await supabase
+                    .from('profiles')
+                    .update(updates)
+                    .eq('id', currentUser.id);
+
+                if (error) throw error;
+
+                alert('Profile updated successfully!');
+                loadProfile(); // Reload profile data
+
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile');
+            }
+        });
+
+        // Handle avatar upload
+document.getElementById('avatarInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+        // Show loading state
+        const avatarPreview = document.getElementById('avatarPreview');
+        avatarPreview.style.opacity = '0.5';
+
+        // Validate file
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        if (file.size > maxSize) {
+            throw new Error('File size must be less than 5MB');
+        }
+
+        // Validate file type
+        const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!validTypes.includes(file.type)) {
+            throw new Error('File must be JPEG, PNG, or WebP');
+        }
+
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+        const filePath = `public/${currentUser.id}/avatar/${fileName}`;
+
+        // Upload image
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('posts')
+            .upload(filePath, file, {
+                cacheControl: '3600',
+                upsert: true
+            });
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+            .from('posts')
+            .getPublicUrl(filePath);
+
+        // Update profile with new avatar URL
+        const { error: updateError } = await supabase
+            .from('profiles')
+            .update({ 
+                avatar_url: publicUrl,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', currentUser.id);
+
+        if (updateError) throw updateError;
+
+        // Update avatar preview
+        avatarPreview.src = publicUrl;
+        avatarPreview.style.opacity = '1';
+
+        // Show success message
+        alert('Profile picture updated successfully!');
+
+    } catch (error) {
+        console.error('Error uploading avatar:', error);
+        alert(error.message || 'Error uploading avatar');
+        // Reset preview opacity
+        document.getElementById('avatarPreview').style.opacity = '1';
+    }
+});
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            const { error } = await supabase.auth.signOut()
+            if (!error) {
+                window.location.href = '../main.html'
+            }
+        });
+
+        // Initialize
+        const user = await checkAuth();
+        if (user) {
+            loadProfile();
+        }
+
+        // Add this right after the initialization code
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('mobileMenuOverlay');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', toggleMobileMenu);
+
+        // Close menu when clicking a link on mobile
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+        // Close menu when screen is resized to desktop size
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+
+    </script>
+</body>
+</html>

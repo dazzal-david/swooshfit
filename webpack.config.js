@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.js",
@@ -34,7 +35,6 @@ module.exports = {
     maxEntrypointSize: 1000000,
     maxAssetSize: 10000000,
   },
-  
   devServer: {
     allowedHosts: "all",
     static: [
@@ -48,5 +48,8 @@ module.exports = {
     ],
     compress: true,
     port: 9000,
+    open: {
+      target: 'landing.html',
+    },
   },
 };
