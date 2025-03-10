@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary: #3a86ff;
-            --primary-dark: #2667cc;
+            --primary: #cbbd93;
+            --primary-dark: #cbbd93;
             --secondary: #ff006e;
-            --accent: #8338ec;
+            --accent: #cbbd93;
             --light: #f8f9fa;
             --dark: #212529;
             --success: #38b000;
@@ -47,7 +47,7 @@
             flex-direction: column;
             justify-content: center;
             width: 50%;
-            background: linear-gradient(135deg, rgba(58, 134, 255, 0.9), rgba(131, 56, 236, 0.9)), url('https://images.unsplash.com/photo-1552346154-21d32810aba3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background: linear-gradient(135deg, rgba(225, 226, 148, 0.9), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1552346154-21d32810aba3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
             color: white;

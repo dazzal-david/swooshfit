@@ -5,126 +5,62 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>SwooshFit - Welcome</title>
+    <title>SwooshFit</title>
     <style>
-        :root {
-            --primary: #3a86ff;
-            --primary-dark: #2667cc;
-            --secondary: #ff006e;
-            --accent: #8338ec;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-400: #ced4da;
-            --gray-500: #adb5bd;
-            --gray-600: #6c757d;
-            --gray-700: #495057;
-            --gray-800: #343a40;
-            --gray-900: #212529;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        .landing-container {
-            width: 100%;
-            max-width: 1200px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
             text-align: center;
+        }
+        .banner {
             position: relative;
-            z-index: 1;
+            width: 100%;
+            height: 100vh;
+            background:  url('https://www.economywatch.com/wp-content/uploads/2023/04/nike.png') no-repeat center center/cover;
+            
+            
         }
-
-        .landing-header {
-            margin-bottom: 3rem;
-            animation: fadeInDown 1s ease;
-        }
-
-        .landing-logo {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-
-        .landing-tagline {
-            font-size: 1.2rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .landing-main {
+        .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            max-width: 800px;
-            animation: fadeInUp 1s ease 0.3s both;
+            flex-direction: column;
+            padding: 20px;
         }
-
-        .landing-main h2 {
+        .swoosh {
             font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 1rem;
+            font-weight: bold;
         }
-
-        .landing-main p {
-            font-size: 1.2rem;
-            color: var(--gray-700);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
         .get-started-button {
             padding: 1rem 2.5rem;
             font-size: 1.1rem;
             font-weight: 600;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
+            background-color:  #cbbd93;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(58, 134, 255, 0.2);
+            box-shadow: #cbbd93
             position: relative;
             overflow: hidden;
         }
 
         .get-started-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(58, 134, 255, 0.3);
+            box-shadow: #cbbd93
         }
 
         .get-started-button:active {
             transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.2);
+            box-shadow: #cbbd93
         }
 
         .get-started-button::after {
@@ -134,7 +70,7 @@
             left: 50%;
             width: 150%;
             height: 150%;
-            background: rgba(255, 255, 255, 0.2);
+            background: #cbbd93;
             border-radius: 50%;
             transform: translate(-50%, -50%) scale(0);
             opacity: 0;
@@ -145,132 +81,75 @@
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
-
-        .background-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 2rem;
+            background: #f4f4f4;
+            color: black;
+            padding-right: px;
+        }
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1rem;
+            background: #f4f4f4;
+            box-shadow: 0 4px 8px rgba(246, 245, 245, 0.997);
+            width: 50%;
+            height: 25%;
+            
+        }
+        .grid-item img {
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+            height: auto;
+            margin-bottom: 1rem;
         }
-
-        .shape {
-            position: absolute;
-            background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), rgba(131, 56, 236, 0.1));
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-        }
-
-        .shape:nth-child(1) {
-            width: 400px;
-            height: 400px;
-            top: -200px;
-            right: -200px;
-            animation: float 15s ease-in-out infinite alternate;
-        }
-
-        .shape:nth-child(2) {
-            width: 300px;
-            height: 300px;
-            bottom: -150px;
-            left: -150px;
-            animation: float 20s ease-in-out infinite alternate-reverse;
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-            100% {
-                transform: translateY(20px) rotate(-5deg);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .landing-logo {
-                font-size: 2.8rem;
-            }
-            
-            .landing-tagline {
-                font-size: 1rem;
-            }
-            
-            .landing-main h2 {
-                font-size: 2rem;
-            }
-            
-            .landing-main p {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .landing-logo {
-                font-size: 2.5rem;
-            }
-            
-            .landing-main h2 {
-                font-size: 1.8rem;
-            }
-            
-            .get-started-button {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
-            }
+        h2, h3 {
+            margin: 0;
         }
     </style>
 </head>
-
 <body>
-    <div class="landing-container">
-        <header class="landing-header">
-            <h1 class="landing-logo">SwooshFit</h1>
-            <p class="landing-tagline">Virtual Shoe Try-On Experience</p>
-        </header>
-        
-        <main class="landing-main">
-            <h2>Welcome to SwooshFit</h2>
-            <p>Experience the future of shoe shopping with our virtual try-on technology.</p>
-            <button class="get-started-button" onclick="redirectToSecondLanding()">Get Started</button>
-        </main>
-    </div>
+    <div class="banner"hero col-lg-12>
+        <div class="overlay" >
+            <h1 class="swoosh">.SWOOSHFIT IS THE HOME FOR SHOE'S VIRTUAL CREATIONS.</h1>
+            <p style="font-style: arial, sans-serif; font-size: large; text-align: center; font-size: 15px;">Experience the Future of shoe shopping with our virtual try-on technology.</p>
+            
+            <p class="highlight"></p><button class="get-started-button" onclick="redirectToSecondLanding()">Get Started</button>
 
-    <div class="background-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
+        </div>
     </div>
+    <div class="grid"style="height: 100%;width: 100%;padding: 70%>
+        <div class="grid-item ">
+            <h1 style="color: #cbbd93;padding-right: 10%;">HOW IT WORKS</h1>
+            <p style="color: #cbbd93; font-size: 15px;padding-right: 10%;">Swooshfit is an AR-powered virtual try-on platform that lets users visualize and fit shoes in real-time before purchasing.</p>
+            
+        </div>
+        <div class="grid-item">
+            <img style="padding-left: 90%;" src="https://www.lemmingatwork.com/inversiones/criptomonedas/nike-metaverso-plataforma-swoosh/img/swoosh-nike-nft-featured_hu04df71610bfd9dced6e46ac33780371c_267199_884x497_fill_q92_lanczos_center.jpg" alt="Create, Collect, Trade & Flex">
+            <h2 style="color:#cbbd93;">CREATE, COLLECT TRADE & FLEX</h2>
+            <p style="color: #cbbd93;"> Display it, wear it  or With SwooshFit  you can create your sneaker collection, trade with others, and flex your style using AR-powered virtual try-ons.s.</p>
+        </div>
+        <div class="grid-item">
+            <img style="padding-left: 90%;" src="images/nike-.swoosh-design-web3-collaborative-digital-creations-sportswear-inclusive-community-creative-nike-fandom-mindsparkle-mag2.jpg" alt="Unlock Special Access">
+            <h2 style="color:#cbbd93;padding-right: 110%;">UNLOCK SPECIAL ACCESS</h2>
+            <p style="color: #cbbd93;;">Unlock special access to exclusive sneaker drops, limited-edition trades, and AR-powered experiences with SwooshFit.</p>
+        </div>
 
+        <div class="grid-item">
+            <img style="padding-left: 90%;" src="images/nike-.swoosh-design-web3-collaborative-digital-creations-sportswear-inclusive-community-creative-nike-fandom-mindsparkle-mag1.jpg" alt="Build With Our Community">
+            <h2 style="color: #cbbd93;">BUILD WITH OUR COMMUNITY</h2>
+            <p style="color: #cbbd93;">Build with our community to create, trade, and flex the latest sneakers while shaping the future of AR-powered fashion.</p>
+        </div>
+    </div>
     <script>
         function redirectToSecondLanding() {
             window.location.href = 'second-landing.html';
         }
     </script>
+
 </body>
 </html>
+

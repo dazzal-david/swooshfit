@@ -5,23 +5,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>SwooshFit - Welcome</title>
+    <title>SwooshFit</title>
     <style>
         :root {
-            --primary: #3a86ff;
-            --primary-dark: #2667cc;
-            --secondary: #ff006e;
-            --accent: #8338ec;
+            --primary: #ffffff;
+            --primary-dark: #000000;
+            --secondary: #f6f6f6;
+            --accent: #e8dede;
             --light: #f8f9fa;
-            --dark: #212529;
+            --dark: #ffffff;
             --gray-100: #f8f9fa;
             --gray-200: #e9ecef;
             --gray-300: #dee2e6;
             --gray-400: #ced4da;
             --gray-500: #adb5bd;
-            --gray-600: #6c757d;
-            --gray-700: #495057;
-            --gray-800: #343a40;
+            --gray-600: #ffffff;
+            --gray-700: #ffffff;
+            --gray-800: #fefeff;
             --gray-900: #212529;
         }
 
@@ -34,7 +34,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #000000 0%, #cbbd93 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -68,7 +68,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-fill-color: transparent;
+            text-fill-color: black;
         }
 
         .landing-tagline {
@@ -109,24 +109,24 @@
             font-size: 1.1rem;
             font-weight: 600;
             background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
+            color: rgb(0, 0, 0);
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(58, 134, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(229, 237, 129, 0.658);
             position: relative;
             overflow: hidden;
         }
 
         .get-started-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(58, 134, 255, 0.3);
+            box-shadow: 0 15px 30px rgba(219, 221, 134, 0.725);
         }
 
         .get-started-button:active {
             transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(225, 241, 130, 0.66);
         }
 
         .get-started-button::after {
@@ -160,7 +160,7 @@
 
         .shape {
             position: absolute;
-            background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), rgba(131, 56, 236, 0.1));
+            background: linear-gradient(135deg, rgba(240, 243, 184, 0.764), rgba(241, 239, 184, 0.742));
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
         }
 
@@ -254,7 +254,7 @@
         </header>
         
         <main class="landing-main">
-            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Virtual Try-On" class="landing-image" />
+            <img src="https://static.designboom.com/wp-content/uploads/2022/11/nike-swoosh-metaverse-designboom-01.jpg" alt="Virtual Try-On" class="landing-image" />
             <button class="get-started-button" onclick="redirectToMain()">Try It Now</button>
         </main>
     </div>
