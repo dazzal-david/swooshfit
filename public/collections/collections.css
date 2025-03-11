@@ -1,10 +1,10 @@
 /* Base Styles */
 :root {
-    --primary-color: #4f46e5;
-    --primary-hover: #4338ca;
+    --primary-color: #cbbd93;
+    --primary-hover: #cbbd93;
     --secondary-color: #f9fafb;
-    --text-primary: #111827;
-    --text-secondary: #6b7280;
+    --text-primary: #928e85;
+    --text-secondary: #928e85;
     --text-tertiary: #9ca3af;
     --border-color: #e5e7eb;
     --card-bg: #ffffff;
